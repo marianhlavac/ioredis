@@ -99,7 +99,7 @@ class RedisConnection {
       if (error is SocketException) {
         _throwSafeError(
           SocketException(error.message,
-              address: InternetAddress(option.host), port: option.port),
+              address: _redisSocket?.address, port: _redisSocket?.port),
         );
         status = RedisConnectionStatus.disconnected;
 
@@ -142,7 +142,7 @@ class RedisConnection {
 
       _throwSafeError(
         SocketException('Redis disconnected',
-            address: InternetAddress(option.host), port: option.port),
+            address: _redisSocket?.address, port: _redisSocket?.port),
       );
       await _reconnect();
     });
